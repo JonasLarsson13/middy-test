@@ -1,0 +1,71 @@
+service: middy-test
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  profile: ${env:PROFILE}
+  region: eu-north-1
+  iam:
+    role: ${env:LAMBDA_ROLE}
+  deploymentMethod: direct
+  environment:
+    TABLE_NAME: middy-test
+
+  useDotenv: true
+
+  plugins:
+    - serverless-webpack
+
+  package:
+    individually: true
+
+  custom:
+    webpack:
+      webpackConfig: 'webpack.config.cjs'
+
+functions:
+  createUser:
+    handler: src/functions/createUser.handler
+    events:
+      - httpApi:
+          path: '/api/user'
+          method: POST
+  updateUser:
+    handler: src/functions/updateUser.handler
+    events:
+      - httpApi:
+          path: '/api/user'
+          method: PATCH
+  deleteUser:
+    handler: src/functions/deleteUser.handler
+    events:
+      - httpApi:
+          path: '/api/user'
+          method: DELETE
+  getUser:
+    handler: src/functions/getUser.handler
+    events:
+      - httpApi:
+          path: '/api/user'
+          method: GET
+  getAllUsers:
+    handler: src/functions/getAllUsers.handler
+    events:
+      - httpApi:
+          path: '/api/users'
+          method: GET
+
+resources:
+  Resources:
+    MiddyDatabase:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableNAme: ${self:provider.environment.TABLE_NAME}
+      AttributeDefinitions:
+        - AttributeName: PK
+          AttributeType: S
+      KeySchema:
+        - AttributeName: PK
+          KeyType: HASH
+      BillingMode: PEY_PER_REQUEST

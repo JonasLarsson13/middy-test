@@ -1,0 +1,20 @@
+{
+  "name": "middy-aws_uppgift",
+  "version": "1.0.0",
+  "description": "This is a middy test, middleware for aws",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "aws-sdk": "^2.1459.0",
+    "serverless-webpack": "^5.13.0"
+  },
+  "dependencies": {
+    "nanoid": "^5.0.1"
+  }
+}
