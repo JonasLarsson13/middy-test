@@ -1,9 +1,10 @@
 # package directories
 node_modules
 jspm_packages
+.serverless
 
 # Serverless directories
-.serverless
+serverless.yml
 
 .env
 .webpack
